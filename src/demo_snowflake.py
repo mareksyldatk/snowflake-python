@@ -16,7 +16,7 @@ def run(session):
             run_id STRING,
             row_num NUMBER,
             category STRING,
-            value NUMBER(10, 2),
+            metric_value NUMBER(10, 2),
             created_at TIMESTAMP_NTZ
         )
         """
@@ -36,7 +36,7 @@ def run(session):
         )
 
     df = session.create_dataframe(
-        rows, schema=["RUN_ID", "ROW_NUM", "CATEGORY", "VALUE", "CREATED_AT"]
+        rows, schema=["RUN_ID", "ROW_NUM", "CATEGORY", "METRIC_VALUE", "CREATED_AT"]
     )
     df.write.mode("append").save_as_table(table_name)
 
