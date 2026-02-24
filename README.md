@@ -11,6 +11,25 @@ Before running, replace `<YOUR_GITHUB_CLASSIC_PAT>` in the script.
 Configured repo URL: `https://github.com/mareksyldatk/snowflake-python.git`.
 This repo will be used next as a Snowflake workspace for running Python scripts.
 
+## Snowflake runtime bootstrap
+
+Use `sql/bootstrap_prod.sql` to create:
+- Role: `ROLE_PROD_PYTHON`
+- Warehouse: `WH_PROD_PYTHON` (`XSMALL`)
+- Database: `ANALYTICS_PROD` (if missing)
+- Schemas: `ANALYTICS_PROD.PYTHON`, `ANALYTICS_PROD.INTEGRATION`, `ANALYTICS_PROD.SECURITY`
+
+## Demo: run Python from this repo
+
+Files:
+- `demo_snowflake.py` (Python handler in repo root)
+- `run_demo_python.sql` (creates Git repository object, fetches branch, creates procedure, calls it)
+
+Run order in Snowflake:
+1. `sql/bootstrap_prod.sql`
+2. `sql/bootstrap_git_integration.sql`
+3. `run_demo_python.sql`
+
 ## Python setup
 
 ```bash
