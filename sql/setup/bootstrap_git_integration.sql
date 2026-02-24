@@ -2,7 +2,7 @@
 --
 -- Execute in order. Replace <YOUR_GITHUB_CLASSIC_PAT> before running.
 -- For private GitHub repos, PAT typically needs classic `repo` scope.
--- This script can run before or after sql/bootstrap_prod.sql.
+-- This script can run before or after sql/setup/bootstrap_prod.sql.
 
 -- ------------------------------------------------------------------
 -- 1) Create API integration and required containers (ACCOUNTADMIN)

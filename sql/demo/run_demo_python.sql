@@ -1,7 +1,7 @@
 -- Minimal demo: run Python from this Git-backed repository in Snowflake.
 -- Assumes these were already run:
--- 1) sql/bootstrap_prod.sql
--- 2) sql/bootstrap_git_integration.sql
+-- 1) sql/setup/bootstrap_prod.sql
+-- 2) sql/setup/bootstrap_git_integration.sql
 -- 3) GRANT ROLE ROLE_PROD_PYTHON TO USER <YOUR_SNOWFLAKE_USERNAME>;
 
 USE ROLE ROLE_PROD_PYTHON;
@@ -21,7 +21,7 @@ LANGUAGE PYTHON
 RUNTIME_VERSION = '3.12'
 PACKAGES = ('snowflake-snowpark-python')
 IMPORTS = (
-  '@ANALYTICS_PROD.INTEGRATION.REPO_SNOWFLAKE_PYTHON/branches/main/demo_snowflake.py'
+  '@ANALYTICS_PROD.INTEGRATION.REPO_SNOWFLAKE_PYTHON/branches/main/src/demo_snowflake.py'
 )
 HANDLER = 'run'
 AS

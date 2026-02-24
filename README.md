@@ -3,7 +3,7 @@ Snowflake + Python Demo
 
 ## Snowflake Git integration
 
-Use `sql/bootstrap_git_integration.sql` to create:
+Use `sql/setup/bootstrap_git_integration.sql` to create:
 - API integration: `GITHUB_INT_SNOWFLAKE_PYTHON`
 - Secret: `GITHUB_PAT_SECRET`
 
@@ -13,7 +13,7 @@ This repo will be used next as a Snowflake workspace for running Python scripts.
 
 ## Snowflake runtime bootstrap
 
-Use `sql/bootstrap_prod.sql` to create:
+Use `sql/setup/bootstrap_prod.sql` to create:
 - Role: `ROLE_PROD_PYTHON`
 - Warehouse: `WH_PROD_PYTHON` (`XSMALL`)
 - Database: `ANALYTICS_PROD` (if missing)
@@ -22,13 +22,14 @@ Use `sql/bootstrap_prod.sql` to create:
 ## Demo: run Python from this repo
 
 Files:
-- `demo_snowflake.py` (Python handler in repo root)
-- `run_demo_python.sql` (creates Git repository object, fetches branch, creates procedure, calls it)
+- `src/demo_snowflake.py` (Python handler)
+- `sql/demo/run_demo_python.sql` (fetches branch, creates procedure, calls it)
 
 Run order in Snowflake:
-1. `sql/bootstrap_prod.sql`
-2. `sql/bootstrap_git_integration.sql`
-3. `run_demo_python.sql`
+1. `sql/setup/bootstrap_prod.sql`
+2. `sql/setup/bootstrap_git_integration.sql`
+3. `sql/setup/bootstrap_git_repository.sql` (first run only)
+4. `sql/demo/run_demo_python.sql`
 
 ## Python setup
 

@@ -1,7 +1,7 @@
 -- First run bootstrap: create Snowflake Git repository object
 -- Assumes:
--- 1) sql/bootstrap_prod.sql
--- 2) sql/bootstrap_git_integration.sql
+-- 1) sql/setup/bootstrap_prod.sql
+-- 2) sql/setup/bootstrap_git_integration.sql
 
 USE ROLE ROLE_PROD_PYTHON;
 USE DATABASE ANALYTICS_PROD;
