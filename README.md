@@ -1,6 +1,16 @@
 # snowflake-python
 Snowflake + Python Demo
 
+## Snowflake Git integration
+
+Use `sql/bootstrap_git_integration.sql` to create:
+- API integration: `GITHUB_INT_SNOWFLAKE_PYTHON`
+- Secret: `GITHUB_PAT_SECRET`
+
+Before running, replace `<YOUR_GITHUB_CLASSIC_PAT>` in the script.
+Configured repo URL: `https://github.com/mareksyldatk/snowflake-python.git`.
+This repo will be used next as a Snowflake workspace for running Python scripts.
+
 ## Python setup
 
 ```bash
