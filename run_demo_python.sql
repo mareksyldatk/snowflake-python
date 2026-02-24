@@ -2,6 +2,7 @@
 -- Assumes these were already run:
 -- 1) sql/bootstrap_prod.sql
 -- 2) sql/bootstrap_git_integration.sql
+-- 3) GRANT ROLE ROLE_PROD_PYTHON TO USER <YOUR_SNOWFLAKE_USERNAME>;
 
 USE ROLE ROLE_PROD_PYTHON;
 USE WAREHOUSE WH_PROD_PYTHON;
