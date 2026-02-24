@@ -1,35 +1,36 @@
 # snowflake-python
 Snowflake + Python Demo
 
-## Snowflake Git integration
+## Repository layout
 
-Use `sql/setup/bootstrap_git_integration.sql` to create:
-- API integration: `GITHUB_INT_SNOWFLAKE_PYTHON`
-- Secret: `GITHUB_PAT_SECRET`
+- `src/demo_snowflake.py`: Python handler used by the demo procedure.
+- `sql/setup/`: one-time Snowflake setup scripts.
+- `sql/demo/run_demo_python.sql`: recurring demo execution script.
 
-Before running, replace `<YOUR_GITHUB_CLASSIC_PAT>` in the script.
-Configured repo URL: `https://github.com/mareksyldatk/snowflake-python.git`.
-This repo will be used next as a Snowflake workspace for running Python scripts.
+## Snowflake quick start
 
-## Snowflake runtime bootstrap
+One-time setup:
+1. Run `sql/setup/bootstrap_prod.sql`.
+2. Grant runtime role to your user:
+   `GRANT ROLE ROLE_PROD_PYTHON TO USER <YOUR_SNOWFLAKE_USERNAME>;`
+3. In `sql/setup/bootstrap_git_integration.sql`, replace `<YOUR_GITHUB_CLASSIC_PAT>`, then run it.
+4. Run `sql/setup/bootstrap_git_repository.sql`.
 
-Use `sql/setup/bootstrap_prod.sql` to create:
+Recurring demo run:
+1. Run `sql/demo/run_demo_python.sql`.
+2. Optional check:
+   `SELECT * FROM ANALYTICS_PROD.PYTHON.DEMO_RANDOM_DATA ORDER BY CREATED_AT DESC LIMIT 50;`
+
+## Snowflake objects created
+
 - Role: `ROLE_PROD_PYTHON`
 - Warehouse: `WH_PROD_PYTHON` (`XSMALL`)
-- Database: `ANALYTICS_PROD` (if missing)
+- Database: `ANALYTICS_PROD`
 - Schemas: `ANALYTICS_PROD.PYTHON`, `ANALYTICS_PROD.INTEGRATION`, `ANALYTICS_PROD.SECURITY`
-
-## Demo: run Python from this repo
-
-Files:
-- `src/demo_snowflake.py` (Python handler)
-- `sql/demo/run_demo_python.sql` (fetches branch, creates procedure, calls it)
-
-Run order in Snowflake:
-1. `sql/setup/bootstrap_prod.sql`
-2. `sql/setup/bootstrap_git_integration.sql`
-3. `sql/setup/bootstrap_git_repository.sql` (first run only)
-4. `sql/demo/run_demo_python.sql`
+- API integration: `GITHUB_INT_SNOWFLAKE_PYTHON`
+- Secret: `GITHUB_PAT_SECRET`
+- Git repository object: `ANALYTICS_PROD.INTEGRATION.REPO_SNOWFLAKE_PYTHON`
+- Procedure: `ANALYTICS_PROD.PYTHON.DEMO_REPO_PY()`
 
 ## Python setup
 
