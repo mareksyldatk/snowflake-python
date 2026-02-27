@@ -3,6 +3,7 @@
 -- 1) sql/setup/bootstrap_dev.sql
 -- 2) sql/setup/bootstrap_current_user_permissions.sql
 -- 3) sql/setup/bootstrap_git_integration.sql
+-- 4) sql/setup/bootstrap_app_secrets.sql
 
 USE ROLE ROLE_DEV_PYTHON;
 USE WAREHOUSE WH_DEV_PYTHON;
@@ -22,6 +23,11 @@ RUNTIME_VERSION = '3.12'
 PACKAGES = ('snowflake-snowpark-python')
 IMPORTS = (
   '@PLATFORM_DEV.INTEGRATION.REPO_SNOWFLAKE_PYTHON/branches/main/src/demo_snowflake.py'
+)
+SECRETS = (
+  'client_id_secret' = PLATFORM_DEV.SECURITY.CLIENT_ID,
+  'client_secret' = PLATFORM_DEV.SECURITY.CLIENT_SECRET,
+  'jwt_assertion_secret' = PLATFORM_DEV.SECURITY.JWT_ASSERTION
 )
 HANDLER = 'run'
 AS

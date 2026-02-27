@@ -13,7 +13,8 @@ One-time setup:
 1. Run `sql/setup/bootstrap_dev.sql`.
 2. Run `sql/setup/bootstrap_current_user_permissions.sql`.
 3. In `sql/setup/bootstrap_git_integration.sql`, replace `<YOUR_GITHUB_CLASSIC_PAT>`, then run it.
-4. Run `sql/setup/bootstrap_git_repository.sql`.
+4. In `sql/setup/bootstrap_app_secrets.sql`, replace placeholders, then run it.
+5. Run `sql/setup/bootstrap_git_repository.sql`.
 
 Recurring demo run:
 1. Run `sql/demo/run_demo_python.sql`.
@@ -28,6 +29,7 @@ Recurring demo run:
 - Schemas: `PLATFORM_DEV.PYTHON`, `PLATFORM_DEV.INTEGRATION`, `PLATFORM_DEV.SECURITY`
 - API integration: `GITHUB_INT_SNOWFLAKE_PYTHON`
 - Secret: `GITHUB_PAT_SECRET`
+- App secrets: `CLIENT_ID`, `CLIENT_SECRET`, `JWT_ASSERTION`
 - Git repository object: `PLATFORM_DEV.INTEGRATION.REPO_SNOWFLAKE_PYTHON`
 - Procedure: `PLATFORM_DEV.PYTHON.DEMO_REPO_PY()`
 
