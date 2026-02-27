@@ -6,7 +6,7 @@ import uuid
 
 
 def run(session):
-    table_name = "ANALYTICS_PROD.PYTHON.DEMO_RANDOM_DATA"
+    table_name = "PLATFORM_DEV.PYTHON.DEMO_RANDOM_DATA"
     run_id = str(uuid.uuid4())
     row_count = 25
 

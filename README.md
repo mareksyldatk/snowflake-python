@@ -10,27 +10,26 @@ Snowflake + Python Demo
 ## Snowflake quick start
 
 One-time setup:
-1. Run `sql/setup/bootstrap_prod.sql`.
-2. Grant runtime role to your user:
-   `GRANT ROLE ROLE_PROD_PYTHON TO USER <YOUR_SNOWFLAKE_USERNAME>;`
+1. Run `sql/setup/bootstrap_dev.sql`.
+2. Run `sql/setup/bootstrap_current_user_permissions.sql`.
 3. In `sql/setup/bootstrap_git_integration.sql`, replace `<YOUR_GITHUB_CLASSIC_PAT>`, then run it.
 4. Run `sql/setup/bootstrap_git_repository.sql`.
 
 Recurring demo run:
 1. Run `sql/demo/run_demo_python.sql`.
 2. Optional check:
-   `SELECT * FROM ANALYTICS_PROD.PYTHON.DEMO_RANDOM_DATA ORDER BY CREATED_AT DESC LIMIT 50;`
+   `SELECT * FROM PLATFORM_DEV.PYTHON.DEMO_RANDOM_DATA ORDER BY CREATED_AT DESC LIMIT 50;`
 
 ## Snowflake objects created
 
-- Role: `ROLE_PROD_PYTHON`
-- Warehouse: `WH_PROD_PYTHON` (`XSMALL`)
-- Database: `ANALYTICS_PROD`
-- Schemas: `ANALYTICS_PROD.PYTHON`, `ANALYTICS_PROD.INTEGRATION`, `ANALYTICS_PROD.SECURITY`
+- Role: `ROLE_DEV_PYTHON`
+- Warehouse: `WH_DEV_PYTHON` (`XSMALL`)
+- Database: `PLATFORM_DEV`
+- Schemas: `PLATFORM_DEV.PYTHON`, `PLATFORM_DEV.INTEGRATION`, `PLATFORM_DEV.SECURITY`
 - API integration: `GITHUB_INT_SNOWFLAKE_PYTHON`
 - Secret: `GITHUB_PAT_SECRET`
-- Git repository object: `ANALYTICS_PROD.INTEGRATION.REPO_SNOWFLAKE_PYTHON`
-- Procedure: `ANALYTICS_PROD.PYTHON.DEMO_REPO_PY()`
+- Git repository object: `PLATFORM_DEV.INTEGRATION.REPO_SNOWFLAKE_PYTHON`
+- Procedure: `PLATFORM_DEV.PYTHON.DEMO_REPO_PY()`
 
 ## Python setup
 

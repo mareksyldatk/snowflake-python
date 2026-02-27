@@ -2,7 +2,7 @@
 --
 -- Execute in order. Replace <YOUR_GITHUB_CLASSIC_PAT> before running.
 -- For private GitHub repos, PAT typically needs classic `repo` scope.
--- This script can run before or after sql/setup/bootstrap_prod.sql.
+-- This script can run before or after sql/setup/bootstrap_dev.sql.
 
 -- ------------------------------------------------------------------
 -- 1) Create API integration and required containers (ACCOUNTADMIN)
@@ -17,10 +17,10 @@
 -- Secret and git objects can be created in dedicated schemas.
 USE ROLE ACCOUNTADMIN;
 
--- Make script order-independent (can run before bootstrap_prod.sql)
-CREATE DATABASE IF NOT EXISTS ANALYTICS_PROD;
-CREATE SCHEMA IF NOT EXISTS ANALYTICS_PROD.SECURITY;
-CREATE SCHEMA IF NOT EXISTS ANALYTICS_PROD.INTEGRATION;
+-- Make script order-independent (can run before bootstrap_dev.sql)
+CREATE DATABASE IF NOT EXISTS PLATFORM_DEV;
+CREATE SCHEMA IF NOT EXISTS PLATFORM_DEV.SECURITY;
+CREATE SCHEMA IF NOT EXISTS PLATFORM_DEV.INTEGRATION;
 
 CREATE OR REPLACE API INTEGRATION GITHUB_INT_SNOWFLAKE_PYTHON
   API_PROVIDER = git_https_api
@@ -32,9 +32,9 @@ CREATE OR REPLACE API INTEGRATION GITHUB_INT_SNOWFLAKE_PYTHON
 
 -- Allow SECURITYADMIN to manage secrets in dedicated SECURITY schema.
 GRANT USAGE ON INTEGRATION GITHUB_INT_SNOWFLAKE_PYTHON TO ROLE SECURITYADMIN;
-GRANT USAGE ON DATABASE ANALYTICS_PROD TO ROLE SECURITYADMIN;
-GRANT USAGE ON SCHEMA ANALYTICS_PROD.SECURITY TO ROLE SECURITYADMIN;
-GRANT CREATE SECRET ON SCHEMA ANALYTICS_PROD.SECURITY TO ROLE SECURITYADMIN;
+GRANT USAGE ON DATABASE PLATFORM_DEV TO ROLE SECURITYADMIN;
+GRANT USAGE ON SCHEMA PLATFORM_DEV.SECURITY TO ROLE SECURITYADMIN;
+GRANT CREATE SECRET ON SCHEMA PLATFORM_DEV.SECURITY TO ROLE SECURITYADMIN;
 
 -- ------------------------------------------------------------------
 -- 2) Create secret with GitHub credentials (SECURITYADMIN)
@@ -43,11 +43,11 @@ GRANT CREATE SECRET ON SCHEMA ANALYTICS_PROD.SECURITY TO ROLE SECURITYADMIN;
 -- Store GitHub username + PAT in a Snowflake SECRET object so credentials
 -- are not embedded in GIT REPOSITORY definitions.
 -- Result:
--- Secret GITHUB_PAT_SECRET is available in ANALYTICS_PROD.SECURITY.
+-- Secret GITHUB_PAT_SECRET is available in PLATFORM_DEV.SECURITY.
 -- Required action:
 -- Replace <YOUR_GITHUB_CLASSIC_PAT> with a valid token before execution.
 USE ROLE SECURITYADMIN;
-USE DATABASE ANALYTICS_PROD;
+USE DATABASE PLATFORM_DEV;
 USE SCHEMA SECURITY;
 
 CREATE OR REPLACE SECRET GITHUB_PAT_SECRET

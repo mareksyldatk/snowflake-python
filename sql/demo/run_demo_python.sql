@@ -1,19 +1,19 @@
 -- Minimal demo: run Python from this Git-backed repository in Snowflake.
 -- Assumes these were already run:
--- 1) sql/setup/bootstrap_prod.sql
--- 2) sql/setup/bootstrap_git_integration.sql
--- 3) GRANT ROLE ROLE_PROD_PYTHON TO USER <YOUR_SNOWFLAKE_USERNAME>;
+-- 1) sql/setup/bootstrap_dev.sql
+-- 2) sql/setup/bootstrap_current_user_permissions.sql
+-- 3) sql/setup/bootstrap_git_integration.sql
 
-USE ROLE ROLE_PROD_PYTHON;
-USE WAREHOUSE WH_PROD_PYTHON;
-USE DATABASE ANALYTICS_PROD;
+USE ROLE ROLE_DEV_PYTHON;
+USE WAREHOUSE WH_DEV_PYTHON;
+USE DATABASE PLATFORM_DEV;
 
-ALTER GIT REPOSITORY ANALYTICS_PROD.INTEGRATION.REPO_SNOWFLAKE_PYTHON FETCH;
+ALTER GIT REPOSITORY PLATFORM_DEV.INTEGRATION.REPO_SNOWFLAKE_PYTHON FETCH;
 
 -- Optional check:
-LS @ANALYTICS_PROD.INTEGRATION.REPO_SNOWFLAKE_PYTHON/branches/main;
+LS @PLATFORM_DEV.INTEGRATION.REPO_SNOWFLAKE_PYTHON/branches/main;
 
-USE SCHEMA ANALYTICS_PROD.PYTHON;
+USE SCHEMA PLATFORM_DEV.PYTHON;
 
 CREATE OR REPLACE PROCEDURE DEMO_REPO_PY()
 RETURNS VARIANT
@@ -21,7 +21,7 @@ LANGUAGE PYTHON
 RUNTIME_VERSION = '3.12'
 PACKAGES = ('snowflake-snowpark-python')
 IMPORTS = (
-  '@ANALYTICS_PROD.INTEGRATION.REPO_SNOWFLAKE_PYTHON/branches/main/src/demo_snowflake.py'
+  '@PLATFORM_DEV.INTEGRATION.REPO_SNOWFLAKE_PYTHON/branches/main/src/demo_snowflake.py'
 )
 HANDLER = 'run'
 AS
