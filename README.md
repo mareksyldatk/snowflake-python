@@ -28,6 +28,7 @@ Recurring demo run:
 - Database: `PLATFORM_DEV`
 - Schemas: `PLATFORM_DEV.PYTHON`, `PLATFORM_DEV.INTEGRATION`, `PLATFORM_DEV.SECURITY`
 - API integration: `GITHUB_INT_SNOWFLAKE_PYTHON`
+- External access integration: `EAI_DEV_PYTHON`
 - Secret: `GITHUB_PAT_SECRET`
 - App secrets: `CLIENT_ID`, `CLIENT_SECRET`, `JWT_ASSERTION`
 - Git repository object: `PLATFORM_DEV.INTEGRATION.REPO_SNOWFLAKE_PYTHON`

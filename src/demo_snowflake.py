@@ -10,13 +10,9 @@ def _sha256_hex(value):
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
-def _get_generic_secret(session, fully_qualified_secret_name):
-    return session.sql(
-        f"SELECT SYSTEM$GET_GENERIC_SECRET_STRING('{fully_qualified_secret_name}')"
-    ).collect()[0][0]
-
-
 def run(session):
+    import _snowflake
+
     table_name = "PLATFORM_DEV.PYTHON.DEMO_RANDOM_DATA"
     run_id = str(uuid.uuid4())
     row_count = 25
@@ -52,9 +48,9 @@ def run(session):
     df.write.mode("append").save_as_table(table_name)
 
     total_rows = session.sql(f"SELECT COUNT(*) FROM {table_name}").collect()[0][0]
-    client_id = _get_generic_secret(session, "PLATFORM_DEV.SECURITY.CLIENT_ID")
-    client_secret = _get_generic_secret(session, "PLATFORM_DEV.SECURITY.CLIENT_SECRET")
-    jwt_assertion = _get_generic_secret(session, "PLATFORM_DEV.SECURITY.JWT_ASSERTION")
+    client_id = _snowflake.get_generic_secret_string("client_id")
+    client_secret = _snowflake.get_generic_secret_string("client_secret")
+    jwt_assertion = _snowflake.get_generic_secret_string("jwt_assertion")
 
     return {
         "table": table_name,
