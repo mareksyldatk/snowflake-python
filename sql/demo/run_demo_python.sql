@@ -24,11 +24,6 @@ PACKAGES = ('snowflake-snowpark-python')
 IMPORTS = (
   '@PLATFORM_DEV.INTEGRATION.REPO_SNOWFLAKE_PYTHON/branches/main/src/demo_snowflake.py'
 )
-SECRETS = (
-  'client_id_secret' = PLATFORM_DEV.SECURITY.CLIENT_ID,
-  'client_secret' = PLATFORM_DEV.SECURITY.CLIENT_SECRET,
-  'jwt_assertion_secret' = PLATFORM_DEV.SECURITY.JWT_ASSERTION
-)
 HANDLER = 'run'
 AS
 $$
