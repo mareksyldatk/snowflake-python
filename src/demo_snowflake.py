@@ -1,18 +1,11 @@
 """Snowflake Python demo handler that populates a random-data table."""
 
 from datetime import datetime, timezone
-import hashlib
 import random
 import uuid
 
 
-def _sha256_hex(value):
-    return hashlib.sha256(value.encode("utf-8")).hexdigest()
-
-
 def run(session):
-    import _snowflake
-
     table_name = "PLATFORM_DEV.PYTHON.DEMO_RANDOM_DATA"
     run_id = str(uuid.uuid4())
     row_count = 25
@@ -48,18 +41,10 @@ def run(session):
     df.write.mode("append").save_as_table(table_name)
 
     total_rows = session.sql(f"SELECT COUNT(*) FROM {table_name}").collect()[0][0]
-    client_id = _snowflake.get_generic_secret_string("client_id")
-    client_secret = _snowflake.get_generic_secret_string("client_secret")
-    jwt_assertion = _snowflake.get_generic_secret_string("jwt_assertion")
 
     return {
         "table": table_name,
         "run_id": run_id,
         "inserted_rows": row_count,
         "total_rows": int(total_rows),
-        "secret_hashes": {
-            "CLIENT_ID": _sha256_hex(client_id),
-            "CLIENT_SECRET": _sha256_hex(client_secret),
-            "JWT_ASSERTION": _sha256_hex(jwt_assertion),
-        },
     }

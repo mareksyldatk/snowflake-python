@@ -13,8 +13,7 @@ One-time setup:
 1. Run `sql/setup/bootstrap_dev.sql`.
 2. Run `sql/setup/bootstrap_current_user_permissions.sql`.
 3. In `sql/setup/bootstrap_git_integration.sql`, replace `<YOUR_GITHUB_CLASSIC_PAT>`, then run it.
-4. In `sql/setup/bootstrap_app_secrets.sql`, replace placeholders, then run it.
-5. Run `sql/setup/bootstrap_git_repository.sql`.
+4. Run `sql/setup/bootstrap_git_repository.sql`.
 
 Recurring demo run:
 1. Run `sql/demo/run_demo_python.sql`.
@@ -28,11 +27,18 @@ Recurring demo run:
 - Database: `PLATFORM_DEV`
 - Schemas: `PLATFORM_DEV.PYTHON`, `PLATFORM_DEV.INTEGRATION`, `PLATFORM_DEV.SECURITY`
 - API integration: `GITHUB_INT_SNOWFLAKE_PYTHON`
-- External access integration: `EAI_DEV_PYTHON`
 - Secret: `GITHUB_PAT_SECRET`
-- App secrets: `CLIENT_ID`, `CLIENT_SECRET`, `JWT_ASSERTION`
 - Git repository object: `PLATFORM_DEV.INTEGRATION.REPO_SNOWFLAKE_PYTHON`
 - Procedure: `PLATFORM_DEV.PYTHON.DEMO_REPO_PY()`
+
+## Notes
+
+1. To enable secret-based fetching later (non-trial accounts):
+   1. Create required `SECRET` objects in `PLATFORM_DEV.SECURITY` and grant `READ` to `ROLE_DEV_PYTHON`.
+   2. Create an external access integration and grant `USAGE` to `ROLE_DEV_PYTHON`.
+   3. Recreate `PLATFORM_DEV.PYTHON.DEMO_REPO_PY()` with `EXTERNAL_ACCESS_INTEGRATIONS` and `SECRETS` mappings.
+   4. In `src/demo_snowflake.py`, read mapped aliases via `_snowflake.get_generic_secret_string(...)`.
+   5. Optionally hash secret values before returning/logging them.
 
 ## Python setup
 
